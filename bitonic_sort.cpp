@@ -52,7 +52,10 @@ static void compare_low(bitonic_t * b, uint32_t i)
     MPI_Status status;
     uint32_t i_o,
              i_r;
-
+    //////////////////////////////////////////////////////////
+    // These two calls exchange the data buffers so the
+    // merges can take place
+    //////////////////////////////////////////////////////////
     MPI_Recv((void*)b->recv_buffer,
              (int32_t)b->local_data_size,
              MPI_INT,
@@ -104,6 +107,10 @@ static void compare_high(bitonic_t * b, uint32_t i)
     uint32_t i_o,
              i_r;
 
+    //////////////////////////////////////////////////////////
+    // These two calls exchange the data buffers so the
+    // merges can take place
+    //////////////////////////////////////////////////////////
     MPI_Send((void*)b->data,
              (int)b->local_data_size,
              MPI_INT,

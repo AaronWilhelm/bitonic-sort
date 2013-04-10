@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////////////////////////////
+// @file   main.cpp
+// @author Aaron Wilhelm
+// @brief  Driver to perform the bitonic sorting
+///////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <mpi.h>
 #include <cstdlib>
@@ -15,12 +20,18 @@
 
 using namespace std;
 
+///////////////////////////////////////////////////////////////////////////////////
+// Print simple help message
+///////////////////////////////////////////////////////////////////////////////////
 void print_help()
 {
     cout << "To generate random data of size 400 use ./bitonicdriver -r 400\n"
          << "To read an input file and sort use ./bitonicdriver -i filename.txt\n";
 }
 
+///////////////////////////////////////////////////////////////////////////////////
+// Parse a text file (name) filed with numbers and stuff the numbers into data
+///////////////////////////////////////////////////////////////////////////////////
 unsigned long long parse_input_file(char *name, vector<unsigned int> & data)
 {
     ifstream ifile;
@@ -41,6 +52,9 @@ unsigned long long parse_input_file(char *name, vector<unsigned int> & data)
     return data.size();
 }
 
+///////////////////////////////////////////////////////////////////////////////////
+// Master's role in scattering the global array of values to all the slaves
+///////////////////////////////////////////////////////////////////////////////////
 void master_scatter_array(const vector<unsigned int> & data, bitonic_t * b)
 {
     unsigned int i = 0;
@@ -52,6 +66,9 @@ void master_scatter_array(const vector<unsigned int> & data, bitonic_t * b)
     data_start = const_cast<unsigned int*>(&(data[i]));
     for (int p = 1; p < b->num_proc; ++p)
     {
+        //////////////////////////////////////////////
+        // Send piece of the large array to the slaves
+        //////////////////////////////////////////////
         MPI_Send((void *) data_start,
                  (int) b->local_data_size,
                  MPI_INT,
@@ -62,9 +79,15 @@ void master_scatter_array(const vector<unsigned int> & data, bitonic_t * b)
     }
 }
 
+///////////////////////////////////////////////////////////////////////////////////
+// Slaves's role in scattering the global array of values to all the slaves
+///////////////////////////////////////////////////////////////////////////////////
 void slave_scatter_array(bitonic_t * b)
 {
     MPI_Status status;
+    ///////////////////////////////////////////
+    // Recieve a chunck of the large data array
+    ///////////////////////////////////////////
     MPI_Recv((void*) b->data,
              (int) b->local_data_size,
              MPI_INT,
@@ -74,6 +97,11 @@ void slave_scatter_array(bitonic_t * b)
              &status);
 }
 
+///////////////////////////////////////////////////////////////////////////////////
+// Master's role in collected all the pieces of the distributed array and stuffing
+// it into data
+// @pre data must be of size b->local_data_size * b->num_proc
+///////////////////////////////////////////////////////////////////////////////////
 void master_collect_array(vector<unsigned int> & data, bitonic_t * b)
 {
     MPI_Status status;
@@ -98,8 +126,15 @@ void master_collect_array(vector<unsigned int> & data, bitonic_t * b)
     }
 }
 
+///////////////////////////////////////////////////////////////////////////////////
+// Slaves's role in collected all the pieces of the distributed array and stuffing
+// it into data
+///////////////////////////////////////////////////////////////////////////////////
 void slave_collect_array(bitonic_t * b)
 {
+    ////////////////////////////////
+    // Send back the small sorted array
+    ////////////////////////////////
     MPI_Send((void*)b->data,
              (int)b->local_data_size,
              MPI_INT,
@@ -124,6 +159,9 @@ int main(int argc, char *argv[])
     bool display_values = false;    
 
     srand(time(NULL));
+    //////////////////////////////////////////
+    // Initialize MPI interface
+    //////////////////////////////////////////
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &mpi_num_procs);
     MPI_Comm_rank(MPI_COMM_WORLD, &mpi_id);
@@ -195,6 +233,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    // Let the slaves know the size of the global array
     MPI_Bcast(&global_array_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
     init_bitonic(&bitonic, mpi_id, mpi_num_procs, global_array_size);
 
