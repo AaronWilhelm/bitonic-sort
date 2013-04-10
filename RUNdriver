@@ -21,4 +21,4 @@
 ## Prerun that writes useful job info into the error file
 /share/apps/job_data_prerun.py
 
-mpirun -n 2  /nethome/users/ajw7v3/CS387/assign2/bitonicdriver
+mpirun -n 2  /nethome/users/ajw7v3/CS387/bitonic-sort/bitonicdriver -r 400000

@@ -118,6 +118,8 @@ int main(int argc, char *argv[])
     char *input_file = NULL;
     int c;
     vector<unsigned int> global_data;
+    double startwtime, endwtime;
+    
 
     srand(time(NULL));
     MPI_Init(&argc, &argv);
@@ -191,18 +193,23 @@ int main(int argc, char *argv[])
     init_bitonic(&bitonic, mpi_id, mpi_num_procs, global_array_size);
 
     // // Distribute global array
-    // if (mpi_id == 0)
-    // {
-    //     master_scatter_array(global_data, &bitonic);
-    // }
-    // else
-    // {
-    //     slave_scatter_array(&bitonic);
-    // }
+    if (mpi_id == 0)
+    {
+        master_scatter_array(global_data, &bitonic);
+    }
+    else
+    {
+        slave_scatter_array(&bitonic);
+    }
     // Sort
-    // MPI_Barrier(MPI_COMM_WORLD);
-    // bitonic_sort(&bitonic);
-    // MPI_Barrier(MPI_COMM_WORLD);
+    MPI_Barrier(MPI_COMM_WORLD);
+    startwtime = MPI_Wtime();
+    bitonic_sort(&bitonic);
+    endwtime = MPI_Wtime();
+
+    cout << "Input size = " << global_array_size << endl;
+    cout << "(wall clock time = " << endwtime-startwtime << ")\n";
+
     // Collect global array
     if (mpi_id == 0)
     {
@@ -213,11 +220,8 @@ int main(int argc, char *argv[])
         slave_collect_array(&bitonic);
     }
 
-// if (mpi_id == 0)
-// for(unsigned int i = 0; i < global_data.size(); ++i)
-// {
-//     cout << global_data[i] << " ";
-// }
+    if (mpi_id == 0)
+      cout  << "All done \n";
 
     destroy_bitonic(&bitonic);
     MPI_Finalize();
