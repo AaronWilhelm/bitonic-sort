@@ -54,14 +54,14 @@ static void compare_low(bitonic_t * b, uint32_t i)
              i_r;
 
     MPI_Recv((void*)b->recv_buffer,
-             (int)b->local_data_size,
+             (int32_t)b->local_data_size,
              MPI_INT,
              (int32_t) i,
              0,
              MPI_COMM_WORLD,
              &status);
     MPI_Send((void*)b->data,
-             (int)b->local_data_size,
+             (int32_t)b->local_data_size,
              MPI_INT,
              (int32_t) i,
              0,
