@@ -14,7 +14,8 @@ struct bitonic_t
     int32_t * data;
 
     // Used internally
-    int32_t * buffer;
+    int32_t * recv_buffer;
+    int32_t * other_buffer;
 };
 
 void init_bitonic(bitonic_t * b,
