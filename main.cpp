@@ -11,6 +11,7 @@
 #include <climits>
 #include "bitonic_sort.h"
 
+#define ARRAYSIZE(x) (sizeof(x)/sizeof(x[0]))
 
 using namespace std;
 
@@ -36,6 +37,7 @@ unsigned long long parse_input_file(char *name, vector<unsigned int> & data)
         ifile >> d;
         data.push_back(d);
     }
+    ifile.close();
     return data.size();
 }
 
@@ -119,7 +121,7 @@ int main(int argc, char *argv[])
     int c;
     vector<unsigned int> global_data;
     double startwtime, endwtime;
-    
+    bool display_values = false;    
 
     srand(time(NULL));
     MPI_Init(&argc, &argv);
@@ -128,7 +130,7 @@ int main(int argc, char *argv[])
     MPI_Get_processor_name(mpi_proc_name,
                            &mpi_proc_name_len);
 
-    while ((c = getopt(argc, argv, "r:i:")) != -1)
+    while ((c = getopt(argc, argv, "r:i:d")) != -1)
     {
         switch (c)
         {
@@ -144,6 +146,9 @@ int main(int argc, char *argv[])
             case 'i':
                 gen_rand_data = false;
                 input_file = optarg;
+                break;
+            case 'd':
+                display_values = true;
                 break;
             default:
                 print_help();
@@ -222,6 +227,20 @@ int main(int argc, char *argv[])
     else
     {
         slave_collect_array(&bitonic);
+    }
+
+    if (mpi_id == 0 && display_values && global_data.size() > 200010)
+    {
+        int starts[] = {100000, 200000};
+        for (unsigned int i = 0; i < ARRAYSIZE(starts); ++i)
+        {
+            for (unsigned int j = 0; j < 10; ++j)
+            {
+                cout << global_data[starts[i] + j] << "  ";
+            }
+            cout << endl;
+        }
+        cout << endl;
     }
 
     if (mpi_id == 0)
