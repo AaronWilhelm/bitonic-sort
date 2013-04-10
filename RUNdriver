@@ -7,7 +7,7 @@
 #PBS -l walltime=0:15:00
 
 ## Set The number of nodes (jobs using <=16 nodes with <=2 ppn are given priority)
-#PBS -l nodes=10
+#PBS -l nodes=2
 
 ## Allocate some memory at each processor
 ##PBS -l mem=4gb
@@ -21,4 +21,4 @@
 ## Prerun that writes useful job info into the error file
 /share/apps/job_data_prerun.py
 
-mpirun -n 10  /nethome/users/ajw7v3/CS387/assign2/bitonicdriver
+mpirun -n 2  /nethome/users/ajw7v3/CS387/assign2/bitonicdriver

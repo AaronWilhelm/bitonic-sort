@@ -12,6 +12,9 @@ struct bitonic_t
     // Data related
     uint64_t local_data_size;
     int32_t * data;
+
+    // Used internally
+    int32_t * buffer;
 };
 
 void init_bitonic(bitonic_t * b,
