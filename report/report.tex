@@ -1,0 +1,105 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\setlength{\topmargin}{-.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{.125in}
+\setlength{\textwidth}{6.25in}
+\setlength{\parindent}{0cm}
+
+\begin{document}
+\lstset{basicstyle=1,xleftmargin=-1in}
+
+\title{CS387 - Parallel Algorithms\\Bitonic Sort}
+\author{Aaron Wilhelm}
+\maketitle
+\newpage
+\section*{Part 1}
+    \begin{center}
+        Timing (in seconds)
+
+        \begin{tabular}{| c | c | c | c | c | c | c |}
+            \hline
+            ~ & \multicolumn{6}{c|}{Number of Processors}\\
+            \hline
+            Size & 1 & 2 & 4 & 8 & 16 & 32\\
+            \hline
+            16M  & 0.7594 & 0.4036 & 0.3213 & 0.2816 & 0.4150 & 0.6800 \\
+            32M  & 1.4265 & 0.8607 & 0.5612 & 0.4379 & 0.7878 & 1.3567 \\
+            64M  & 2.8224 & 1.8084 & 1.1439 & 1.0312 & 1.7689 & 2.5956 \\
+            128M & 5.2902 & 3.7402 & 2.3268 & 1.8818 & 3.3816 & 5.7314 \\
+            \hline
+        \end{tabular}
+    \end{center}
+
+\section*{Part 2}
+    \subsection*{I}
+     The first 10 numbers after index 100,000:
+      \begin{center}
+        \begin{tabular}{ c  c  c  c  c }
+            222352 & 222354 & 222355 & 222356 & 222358 \\ 
+            222359 & 222361 & 222362 & 222365 & 222367
+        \end{tabular}
+      \end{center}
+
+    \subsection*{I}
+     The first 10 numbers after index 200,000:
+      \begin{center}
+        \begin{tabular}{ c  c  c  c  c }
+            479822 &  479824 &  479835 &  479837 &  479841\\
+            479845 &  479847 &  479848  & 479852 &  479853
+        \end{tabular}
+      \end{center}
+
+\section*{Part 3}
+    \begin{equation}
+        Approx.\ Speedup\ =\ \frac{O(N lg(N))}{O(N lg(N)) O(2^P * N)}\
+        =\ O \Bigg(\frac{lg(N)}{lg(N) + 2^P} \Bigg)
+    \end{equation}
+
+\section*{Part 4}
+   \begin{samepage}
+    \begin{center}
+        Speed Up
+
+        \begin{tabular}{| c | c | c | c | c | c | c |}
+            \hline
+            ~ & \multicolumn{6}{c|}{Number of Processors}\\
+            \hline
+            Size & 1 & 2 & 4 & 8 & 16 & 32\\
+            \hline
+            16M  & 1.00 & 1.88 & 2.36 & 2.70 & 1.83 & 1.12\\
+            32M  & 1.00 & 1.66 & 2.54 & 3.26 & 1.81 & 1.05\\
+            64M  & 1.00 & 1.56 & 2.47 & 2.73 & 1.60 & 1.09\\
+            128M & 1.00 & 1.41 & 2.27 & 2.81 & 1.56 & 0.923\\
+            \hline
+        \end{tabular}
+    \end{center}
+   \end{samepage}
+
+\newpage
+   \begin{samepage}
+    \begin{center}
+        Efficiency
+
+        \begin{tabular}{| c | c | c | c | c | c | c |}
+            \hline
+            ~ & \multicolumn{6}{c|}{Number of Processors}\\
+            \hline
+            Size & 1 & 2 & 4 & 8 & 16 & 32\\
+            \hline
+            16M  & 1.   &  .94 &  .59 & .3375 & .114375 & .035\\
+            32M  & 1.   & .83  & .635 & .4075 & .113125 & .0328125\\
+            64M  & 1.   & .78  & .6175& .34125& .1 & .0340625\\
+            128M & 1. &  .705  & .5675& .35125& .0975& .02884375\\
+            \hline
+        \end{tabular}
+    \end{center}
+   \end{samepage}
+
+\end{document}
