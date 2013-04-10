@@ -1,0 +1,33 @@
+Jobname: RUNp16n32M
+Running under user: ajw7v3
+From queue: shortrun_cpu
+PBS Job ID: 54569.nic-p1.srv.mst.edu
+Master process running on: ibcompute-16-5.local
+Working directory is: /home/ajw7v3/CS387/bitonic-sort
+
+PBS has allocated the following nodes:
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+ibcompute-16-5
+
+This job has allocated 16 cpus
+
+Starting execution at Wed, 10 Apr 2013 14:26:13
+################################################################################
+
+Input size = 32000000
+(wall clock time = 0.471509)
+All done 

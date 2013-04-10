@@ -1,0 +1,37 @@
+Jobname: RUNp4n16M
+Running under user: ajw7v3
+From queue: shortrun_cpu
+PBS Job ID: 54522.nic-p1.srv.mst.edu
+Master process running on: compute-16-8.local
+Working directory is: /home/ajw7v3/CS387/bitonic-sort
+
+PBS has allocated the following nodes:
+compute-16-8
+compute-16-8
+compute-16-8
+compute-16-8
+
+This job has allocated 4 cpus
+
+Starting execution at Wed, 10 Apr 2013 14:13:18
+################################################################################
+
+--------------------------------------------------------------------------
+[[31002,1],0]: A high-performance Open MPI point-to-point messaging module
+was unable to find any relevant network interfaces:
+
+Module: OpenFabrics (openib)
+  Host: compute-16-8.local
+
+Another transport will be used instead, although this may result in
+lower performance.
+--------------------------------------------------------------------------
+CMA: no RDMA devices found
+CMA: no RDMA devices found
+CMA: no RDMA devices found
+CMA: no RDMA devices found
+Input size = 16000000
+(wall clock time = 0.309759)
+All done 
+[compute-16-8.local:24186] 3 more processes have sent help message help-mpi-btl-base.txt / btl:no-nics
+[compute-16-8.local:24186] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
