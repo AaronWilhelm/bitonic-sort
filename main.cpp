@@ -190,9 +190,10 @@ int main(int argc, char *argv[])
         }
     }
 
+    MPI_Bcast(&global_array_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
     init_bitonic(&bitonic, mpi_id, mpi_num_procs, global_array_size);
 
-    // // Distribute global array
+    // Distribute global array
     if (mpi_id == 0)
     {
         master_scatter_array(global_data, &bitonic);
@@ -207,8 +208,11 @@ int main(int argc, char *argv[])
     bitonic_sort(&bitonic);
     endwtime = MPI_Wtime();
 
-    cout << "Input size = " << global_array_size << endl;
-    cout << "(wall clock time = " << endwtime-startwtime << ")\n";
+    if (mpi_id == 0)
+    {
+        cout << "Input size = " << global_array_size << endl;
+        cout << "(wall clock time = " << endwtime-startwtime << ")\n";
+    }
 
     // Collect global array
     if (mpi_id == 0)
@@ -221,7 +225,9 @@ int main(int argc, char *argv[])
     }
 
     if (mpi_id == 0)
+    {
       cout  << "All done \n";
+    }
 
     destroy_bitonic(&bitonic);
     MPI_Finalize();
