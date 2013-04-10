@@ -1,0 +1,21 @@
+#!/bin/bash
+
+script_list=( )
+for n_proc in 1 2 4 8 16 32
+do
+    for s in 16 32 64 128
+    do
+        name="RUNp${n_proc}n${s}M"
+        size=$[$s * 1000000]
+        m4 -Dname=$name -Dnum_proc=$n_proc -Dsize=$size run.m4 > $name
+        script_list+="$name "
+    done
+done
+
+for script in ${script_list[0]}
+do
+    for (( i=0 ; i < 5 ; i++))
+    do
+        qsub $script
+    done
+done
