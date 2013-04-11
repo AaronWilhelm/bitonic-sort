@@ -57,10 +57,40 @@
       \end{center}
 
 \section*{Part 3}
-    \begin{equation}
-        Approx.\ Speedup\ =\ \frac{O(N lg(N))}{O(N lg(N)) O(2^P * N)}\
-        =\ O \Bigg(\frac{lg(N)}{lg(N) + 2^P} \Bigg)
-    \end{equation}
+    \begin{eqnarray}
+        T_{bitonic} & = & \frac{N}{P} lg(\frac{N}{P}) + 2 \frac{N}{P} (1 + 2 + ...+ log P)\\
+                    & = & \frac{N}{P} (lg(\frac{N}{P}) + 2 \frac{lg P ( 1 + lg P)}{2}) \\
+                    & = & \frac{N}{P} ( lg N - lg P + lg P + lg^2 P)\\
+                    & = & \frac{N}{P} (lg N + lg^2 P)
+    \end{eqnarray}
+
+    \begin{eqnarray}
+        Speed\ Up & = & \frac{N lg N}{T_{bitonic}} \\
+                  & = & \frac{P lg N}{lg N + lg^2 P}
+    \end{eqnarray}
+
+    \begin{eqnarray}
+        Efficiency & = & \frac{Speed\ Up}{P}\\
+                   & = & \frac{lg N}{lg N + lg^2 P}
+    \end{eqnarray}
+
+    When $N=P$:
+    \begin{eqnarray}
+        Speed\ Up & = & \frac{N}{1 + lg N}
+    \end{eqnarray}
+
+    \begin{eqnarray}
+        Efficiency & = & \frac{1}{1 + lg N}
+    \end{eqnarray}
+
+    When $N >> P$:
+    \begin{eqnarray}
+        Speed\ Up & = & \frac{P lg N}{lg N + 1}
+    \end{eqnarray}
+
+    \begin{eqnarray}
+        Efficiency & = & \frac{lg N}{lg N + 1}
+    \end{eqnarray}
 
 \section*{Part 4}
    \begin{samepage}
@@ -102,4 +132,13 @@
     \end{center}
    \end{samepage}
 
+    \subsection*{1}
+    At first the speed up increases then it levels off as N increases,
+    much like the way the theoretical equation does.
+    \subsection*{2}
+    The efficiency decreases as N increases, like the theoretical equation does.
+    \subsection*{3}
+    The efficiency decreases as P increases, like the theoretical equation does.
+
+    All of the equations are consistent because the code was written correctly.
 \end{document}

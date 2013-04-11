@@ -30,8 +30,8 @@ $(REPORT): report/report.tex results/results.txt
 	cd report && pdflatex report.tex
 	cd report && mv report.pdf ../$(REPORT)
 
-$(ZIPNAME): $(CPPFILES) $(HFILES) $(REPORT)
-	zip $(ZIPNAME) $(CPPFILES) $(HFILES) $(REPORT)
+$(ZIPNAME): $(CPPFILES) $(HFILES) $(REPORT) Makefile
+	zip $(ZIPNAME) $(CPPFILES) $(HFILES) $(REPORT) Makefile
 
 clean:
 	-rm *.o
