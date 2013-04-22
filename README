@@ -1,0 +1,6 @@
+This is a simple implementation of the bitonic sorting algorithm for my
+Introduction to Parallel and distributed algorithms class
+
+It is setup to run on my school's cluster (not sure what kind) so,
+if you want to run it you'll probably have to change all the job
+submission scripts
